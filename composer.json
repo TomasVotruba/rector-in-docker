@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    },
+    "scripts": {
+        "rector-ci": "./vendor/bin/rector process --config rector-ci.php"
+    }
+}
