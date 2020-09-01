@@ -7,18 +7,10 @@ on:
             - master
 
 jobs:
-    matrix:
-        strategy:
-            fail-fast: false
-            matrix:
-                actions:
-                    -
-                        name: Rector CI
-                        install: composer install -d .tools/rector --no-progress --ansi
-                        run: composer rector-ci
+    -
+        name: Rector CI
 
         runs-on: ubuntu-latest
-        name: ${{ matrix.actions.name }}
 
         steps:
             -   uses: actions/checkout@v2
@@ -28,5 +20,10 @@ jobs:
                     php-version: 7.4
                     coverage: none
 
-            -   run: ${{ matrix.actions.install }}
-            -   run: ${{ matrix.actions.run }}
+            -   run: composer install -d .tools/rector --no-progress --ansi
+
+            # load local classes
+            -   run: composer dump-autoload
+
+            # run rector
+            -   run: composer rector-ci
