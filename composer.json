@@ -8,6 +8,6 @@
         }
     },
     "scripts": {
-        "rector-ci": "./vendor/bin/rector process --config rector-ci.php"
+        "rector-ci": "./vendor/bin/rector process --config rector-ci.php --ansi --dry-run"
     }
 }
