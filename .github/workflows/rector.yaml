@@ -27,7 +27,7 @@ jobs:
 
                     -
                         name: 'Rector Prefixed - Show With Sets'
-                        install: composer install -d .tools/rector-phar --no-progress --ansi
+                        install: composer install -d .tools/rector-prefixed --no-progress --ansi
                         run: .tools/rector-prefixed/vendor/bin/rector show --config rector-with-sets.php --ansi
 
         name: ${{ matrix.actions.name }}
