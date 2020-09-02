@@ -1,10 +1,34 @@
-name: Rector CI
+name: Rector
 
 on: [push, pull_request]
 
 jobs:
-    rector_ci:
-        name: Rector CI
+    matrix:
+        strategy:
+            fail-fast: false
+            matrix:
+                actions:
+                    -
+                        name: 'Rector Composer - Process'
+                        install: composer install -d .tools/rector --no-progress --ansi
+                        run: .tools/rector/bin/rector process --config rector-ci.php --ansi --dry-run
+
+                    -
+                        name: 'Rector Composer - Show With Sets'
+                        install: composer install -d .tools/rector --no-progress --ansi
+                        run: .tools/rector/bin/rector show --config rector-with-sets.php --ansi
+
+                    -
+                        name: 'Rector PHAR - Process'
+                        install: composer install -d .tools/rector-prefixed --no-progress --ansi
+                        run: .tools/rector-prefixed/bin/rector process --config rector-ci.php --ansi --dry-run
+
+                    -
+                        name: 'Rector PHAR - Show With Sets'
+                        install: composer install -d .tools/rector-phar --no-progress --ansi
+                        run: .tools/rector-phar/bin/rector show --config rector-with-sets.php --ansi
+
+        name: ${{ matrix.actions.name }}
         runs-on: ubuntu-latest
 
         steps:
@@ -15,10 +39,9 @@ jobs:
                     php-version: 7.4
                     coverage: none
 
-            -   run: composer install -d .tools/rector --no-progress --ansi
+            -   run: ${{ matrix.actions.install }}
 
             # load local classes
             -   run: composer dump-autoload
 
-            # run rector
-            -   run: ./vendor/bin/rector process --config rector-ci.php --ansi --dry-run
+            -   run: ${{ matrix.actions.run }}
