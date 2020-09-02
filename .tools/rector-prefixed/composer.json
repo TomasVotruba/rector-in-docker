@@ -1,5 +1,5 @@
 {
     "require": {
-        "rector/rector-prefixed": "^0.8.3"
+        "rector/rector-prefixed": "^0.8.5"
     }
 }
