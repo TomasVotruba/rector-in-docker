@@ -8,25 +8,27 @@ jobs:
             fail-fast: false
             matrix:
                 actions:
+                    # Rector as composer dependency
                     -
                         name: 'Rector Composer - Process'
                         install: composer install -d .tools/rector --no-progress --ansi
-                        run: .tools/rector/bin/rector process --config rector-ci.php --ansi --dry-run
+                        run: .tools/rector/vendor/bin/rector process --config rector-ci.php --ansi --dry-run
 
                     -
                         name: 'Rector Composer - Show With Sets'
                         install: composer install -d .tools/rector --no-progress --ansi
-                        run: .tools/rector/bin/rector show --config rector-with-sets.php --ansi
+                        run: .tools/rector/vendor/bin/rector show --config rector-with-sets.php --ansi
 
+                    # Rector as Prefixed PHAR
                     -
-                        name: 'Rector PHAR - Process'
+                        name: 'Rector Prefixed - Process'
                         install: composer install -d .tools/rector-prefixed --no-progress --ansi
-                        run: .tools/rector-prefixed/bin/rector process --config rector-ci.php --ansi --dry-run
+                        run: .tools/rector-prefixed/vendor/bin/rector process --config rector-ci.php --ansi --dry-run
 
                     -
-                        name: 'Rector PHAR - Show With Sets'
+                        name: 'Rector Prefixed - Show With Sets'
                         install: composer install -d .tools/rector-phar --no-progress --ansi
-                        run: .tools/rector-phar/bin/rector show --config rector-with-sets.php --ansi
+                        run: .tools/rector-prefixed/vendor/bin/rector show --config rector-with-sets.php --ansi
 
         name: ${{ matrix.actions.name }}
         runs-on: ubuntu-latest
