@@ -1,10 +1,10 @@
-name: Rector CI
+name: Rector Show With Sets
 
 on: [push, pull_request]
 
 jobs:
     rector_ci:
-        name: Rector CI
+        name: Rector Show With Sets
         runs-on: ubuntu-latest
 
         steps:
@@ -21,4 +21,4 @@ jobs:
             -   run: composer dump-autoload
 
             # run rector
-            -   run: ./vendor/bin/rector process --config rector-ci.php --ansi --dry-run
+            -   run: ./vendor/bin/rector show --config rector-with-sets.php
